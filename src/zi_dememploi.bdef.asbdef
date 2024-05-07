@@ -1,0 +1,44 @@
+managed implementation in class zbp_i_dememploi unique;
+strict;
+with draft;
+
+define behavior for ZI_DEMEMPLOI alias demandeEmploi
+persistent table zpfe_dememploi
+draft table zpfe_demEmp_drft
+lock master total etag  locallastchangedat
+authorization master ( instance )
+etag master lastchangedat
+{
+field ( numbering : managed, readonly) uuid;
+  field (readonly) demempid,last_changed_at, last_changed_by, created_at, created_by;
+  create;
+  update;
+  delete;
+
+  draft action Edit;
+  draft action Activate optimized;
+  draft action Discard;
+  draft action Resume;
+  draft determine action Prepare;
+
+    //association _CV { create;  with draft; }
+
+}
+/*define behavior for ZI_DEMEMPLOI_ATTACHMENT alias CV
+implementation in class zbp_i_dememploi_attachment unique
+persistent table zpfe_dememp_cv
+draft table zpfe_cvEmp_draft
+lock dependent by _demandeEmploi
+authorization dependent by _demandeEmploi
+etag master lastchangedat
+{
+
+//determination calculattachment_id on modify { create; }
+
+  update;
+  delete;
+  field ( numbering : managed, readonly) uuid;
+  field ( readonly ) keyparent;
+  //field ( readonly ) id_attachment;
+  association _demandeEmploi { with draft; }
+}*/

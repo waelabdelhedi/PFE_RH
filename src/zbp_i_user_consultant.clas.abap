@@ -1,0 +1,5 @@
+CLASS zbp_i_user_consultant DEFINITION PUBLIC ABSTRACT FINAL FOR BEHAVIOR OF zi_user_consultant.
+ENDCLASS.
+
+CLASS zbp_i_user_consultant IMPLEMENTATION.
+ENDCLASS.

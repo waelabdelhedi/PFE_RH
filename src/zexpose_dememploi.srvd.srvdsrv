@@ -1,0 +1,4 @@
+@EndUserText.label: 'Service Definition for Demande Emploi'
+define service ZEXPOSE_DEMEMPLOI {
+  expose ZC_DEMEMPLOI as demandeEmploi;
+}

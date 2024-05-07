@@ -1,0 +1,102 @@
+managed implementation in class zbp_i_user_stagiaire unique;
+strict;
+with draft;
+
+define behavior for ZI_USER_Stagiaire alias User_S
+persistent table ZPFE_USER_S
+draft table ZPFE_USER_S_drft
+lock master total etag  locallastchangedat
+authorization master ( instance )
+etag master lastchangedat
+{
+  field ( numbering : managed, readonly) uuid;
+  field (readonly) userid,last_changed_at, last_changed_by, created_at, created_by;
+  create;
+  update;
+  delete;
+
+  draft action Edit;
+  draft action Activate optimized;
+  draft action Discard;
+  draft action Resume;
+  draft determine action Prepare;
+
+  association _Stagiaire { create;  with draft; }
+  association _Admin { create;  with draft; }
+  association _Consultant { create;  with draft; }
+
+
+
+}
+define behavior for ZI_Stagiaire alias Stagiaire
+implementation in class zbp_i_stagiaire unique
+persistent table zpfe_stagiaire
+draft table zpfe_stag_draft
+lock dependent by _userS
+authorization dependent by _userS
+etag master lastchangedat
+{
+
+//determination calculattachment_id on modify { create; }
+
+  update;
+  delete;
+  field ( numbering : managed, readonly) uuid;
+  field ( readonly ) keyparent;
+  //field ( readonly ) id_attachment;
+  association _userS { with draft; }
+}
+define behavior for ZI_ADMIN alias Admin
+implementation in class zbp_i_admin unique
+persistent table zpfe_admin
+draft table zpfe_admin_draft
+lock dependent by _userS
+authorization dependent by _userS
+etag master lastchangedat
+{
+
+//determination calculattachment_id on modify { create; }
+
+  update;
+  delete;
+  field ( numbering : managed, readonly) uuid;
+  field ( readonly ) keyparent;
+  //field ( readonly ) id_attachment;
+  association _userS { with draft; }
+}
+define behavior for ZI_CONSULTANT alias Consultant
+implementation in class zbp_i_consultant unique
+persistent table zpfe_consultant
+draft table zpfe_cons_draft
+lock dependent by _userS
+authorization dependent by _userS
+etag master lastchangedat
+{
+
+//determination calculattachment_id on modify { create; }
+
+  update;
+  delete;
+  field ( numbering : managed, readonly) uuid;
+  field ( readonly ) keyparent;
+  //field ( readonly ) id_attachment;
+  association _userS { with draft; }
+}
+/*define behavior for ZI_ROLE alias Role
+implementation in class zbp_i_role unique
+persistent table zpfe_role
+draft table zpfe_role_draft
+lock dependent by _userS
+authorization dependent by _userS
+etag master lastchangedat
+{
+
+//determination calculattachment_id on modify { create; }
+
+  update;
+  delete;
+  field ( numbering : managed, readonly) uuid;
+  field ( readonly ) keyparent;
+  //field ( readonly ) id_attachment;
+  association _userS { with draft; }
+}*/

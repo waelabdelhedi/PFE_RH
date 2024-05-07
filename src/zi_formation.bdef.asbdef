@@ -1,0 +1,21 @@
+managed implementation in class zbp_i_formation unique;
+//strict;
+
+define behavior for ZI_FORMATION alias Formation
+persistent table ZPFE_FORMATION
+lock master
+//authorization master ( instance )
+//etag master <field_name>
+{
+  field ( numbering : managed, readonly) uuid;
+  field (readonly) formationid,last_changed_at, last_changed_by, created_at, created_by;
+  create;
+  update;
+  delete;
+
+  determination CalculateFormationKey on modify { create; }
+  validation validateSujet on save { field sujet; create; }
+  validation validateFormateur on save { field formateur; create; }
+  validation validateModalite on save { field modalite; create; }
+  validation validateDates on save { field datedebut, datefin; create; }
+}

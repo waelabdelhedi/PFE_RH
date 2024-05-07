@@ -1,0 +1,4 @@
+@EndUserText.label: 'Service Definition for Note Frais'
+define service ZEXPOSE_NOTEFRAIS {
+  expose ZC_NOTEFRAIS as Notefrais;
+}
